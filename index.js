@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Hello from './Hello';
 import './style.css';
+import {Container,Button,ButtonGroup} from 'reactstrap'
 
+function ToolButtons() {
+return (<Button>tet</Button>)
+}
 class App extends Component {
   constructor() {
     super();
@@ -13,12 +17,13 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
+      <ToolButtons/>
         <Hello name={this.state.name} />
         <p>
-          Start editing to see some magic happen :)
+          Start editing xxto see some magic happe n :)
         </p>
-      </div>
+      </Container>
     );
   }
 }
