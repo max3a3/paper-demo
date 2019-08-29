@@ -7,3 +7,10 @@ export function setButtons(data) {
     }
 }
 
+export function setTool(data) {
+    return {
+        type: ActionTypes.SET_TOOL,
+        data
+    }
+}
+

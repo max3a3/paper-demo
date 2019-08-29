@@ -8,31 +8,13 @@ import configureStore from './configure-store'
 import {setButtons} from "./store/ui/actions";
 import {useSelector, useDispatch} from "react-redux";
 import { Provider } from 'react-redux'
+import {CanvasEditor} from './component/CanvasEditor'
+import {ToolSelector} from "./container/ToolSelector";
+import {TOOLS} from "./config";
+import {TooledPaper} from "./container/TooledPaper";
 
 const store = configureStore()
 
-function RxButton({text}) {
-    const dispatch = useDispatch();
-    const current = useSelector(state => state.ui.buttons);
-    return (
-        <Button active={current === text} onClick={() => dispatch(setButtons(text))}>
-            {text}
-        </Button>
-    )
-
-}
-
-function ToolButtons() {
-    let buttons = ['left', 'middle', 'right'];
-    return (
-        <div>
-            <ButtonGroup>
-                {buttons.map(
-                    (t, i) => <RxButton text={t} key={i}/>)}
-            </ButtonGroup>
-        </div>
-    );
-}
 
 class App extends Component {
     constructor() {
@@ -46,8 +28,10 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <Container>
-                    <ToolButtons/>
+                    <ToolSelector />
                     <Hello name={this.state.name}/>
+        <TooledPaper />
+                    {/*<CanvasEditor/>*/}
                 </Container>
             </Provider>
         );
