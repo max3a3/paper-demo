@@ -6,7 +6,9 @@ import {TOOLS} from "../config";
 const mapStateToProps = (state) => {
     return {
         current: state.ui.tool,
-        tools: TOOLS
+        tools: TOOLS,
+        stroke: state.ui.stroke,
+        fill: state.ui.fill,
     }
 }
 

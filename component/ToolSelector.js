@@ -1,6 +1,6 @@
 import {Button, ButtonGroup} from 'reactstrap'
 import PropTypes from 'prop-types'
-import React from 'react';
+import React,{Fragment} from 'react';
 
 function RxButton({text, current, setTool}) {
     return (
@@ -19,12 +19,12 @@ RxButton.propTypes = {
 export function ToolSelector(props) {
     const {buttons,...rest} = props
     return (
-        <div>
+        <Fragment>
             <ButtonGroup>
                 {buttons.map(
                     (t, i) => <RxButton text={t} {...rest} key={i}/>)}
             </ButtonGroup>
-        </div>
+        </Fragment>
     );
 }
 

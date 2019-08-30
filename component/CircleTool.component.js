@@ -26,8 +26,8 @@ class CircleToolComponent extends PathTool {
             const path = new Path.Circle({
                 center: toolEvent.point,
                 radius: 3,
-                fillColor: pathProps.selectedFillColor || new Color(0.9, 0.9, 1, 0.75),
                 selected: true,
+                ...pathProps
             });
             this.path = path;
             onPathInit(path);
