@@ -1,10 +1,8 @@
 import {Button, ButtonGroup} from 'reactstrap'
 import PropTypes from 'prop-types'
 import React from 'react';
-import {setTool} from "../store/ui/actions";
-const noop = () => {};
 
-function RxButton({text, current = 'notyet', setTool = noop}) {
+function RxButton({text, current, setTool}) {
     return (
         <Button active={current === text} onClick={() => setTool(text)}>
             {text}
@@ -14,8 +12,8 @@ function RxButton({text, current = 'notyet', setTool = noop}) {
 }
 RxButton.propTypes = {
     text: PropTypes.string.isRequired,
-    current: PropTypes.string,
-    setTool:PropTypes.func
+    current: PropTypes.string.isRequired,
+    setTool:PropTypes.func.isRequired
 }
 
 export function ToolSelector(props) {

@@ -10,8 +10,7 @@ const {Tool, PaperScope} = ReactPaperJS;
 
 const MOUSE_LEFT_CODE = 0;
 
-@PaperScope
-class CircleTool extends PathTool {
+class CircleToolComponent extends PathTool {
     static defaultProps = {
         ...PathTool.defaultProps,
         pathProps: {
@@ -79,5 +78,7 @@ class CircleTool extends PathTool {
         );
     }
 }
+// default react scripts don't support @PaperScope decorator
+let CircleTool = PaperScope(CircleToolComponent)
 
 export default React.forwardRef((props, ref) => <CircleTool innerRef={ref} {...props} />);
