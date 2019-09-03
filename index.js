@@ -23,7 +23,7 @@ class App extends Component {
     };
   }
 
-  render()
+  rendert()
   // test of tool
   {
     return (
@@ -43,7 +43,7 @@ class App extends Component {
     return <CanvasEditor/>
   }
 
-  renderd()
+  render()
   // test of direct paper.js usage
   {
     return <DirectPaper/>
