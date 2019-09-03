@@ -20,9 +20,9 @@ function getdrawing() {
   }
 
   let style = {
-    fillColor: new paper.Color(1, 0, 0),
+    fillColor: new paper.Color(1, 0, 0), 
     // strokeColor: 'black',
-     strokeColor: new paper.Color(0,0.9,0.5),
+    strokeColor: new paper.Color(0, 0.9, 0.5),
     strokeWidth: 2
   };
   drawLine([10, 5], style)
@@ -30,7 +30,7 @@ function getdrawing() {
 }
 export function DirectPaper() {
   let canvas_ref = useRef(null)
-  let textAreaRef = useRef(null)
+  let textAreaRef = useRef(null) 
   useEffect(() => {
 
     paper.setup(canvas_ref.current);
@@ -38,20 +38,30 @@ export function DirectPaper() {
 
   })
   function onSave() {
-    let value =     paper.project.exportJSON({asString: true})
-    textAreaRef.current.value = value
+    let value = paper.project.exportJSON({ asString: false })
+    textAreaRef.current.value = JSON.stringify(value, undefined, 2)
   }
   function onLoad() {
     let json_str = textAreaRef.current.value
+    paper.project.clear()
     paper.project.importJSON(JSON.parse(json_str))
   }
-  function onClear(){
+  function onClear() {
     paper.project.clear()
+  }
+  function onObject1() {
+    paper.project.clear()
+    let [x, y, width, height] = [30, 10, 80, 30]
+    let rect = new paper.Path.Rectangle(x, y, width, height)
+    rect.strokeColor = new paper.Color(0, 0.5, 0.9)
+    rect.fillColor = new paper.Color(0, 0.5, 0.9)
+
   }
   return (
     <div className="flex_container">
       <div className="flex_item">
         <button onClick={onClear}>clear</button><br />
+        <button onClick={onObject1}>object1</button><br />
         <button onClick={onSave}>save</button><br />
         <button onClick={onLoad}>load</button><br />
         <br />
