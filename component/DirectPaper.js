@@ -21,7 +21,8 @@ function getdrawing() {
 
   let style = {
     fillColor: new paper.Color(1, 0, 0),
-    strokeColor: 'black',
+    // strokeColor: 'black',
+     strokeColor: new paper.Color(0,0.9,0.5),
     strokeWidth: 2
   };
   drawLine([10, 5], style)
@@ -37,13 +38,22 @@ export function DirectPaper() {
 
   })
   function onSave() {
-    textAreaRef.current.value = 'yoyo'
+    let value =     paper.project.exportJSON({asString: true})
+    textAreaRef.current.value = value
+  }
+  function onLoad() {
+    let json_str = textAreaRef.current.value
+    paper.project.importJSON(JSON.parse(json_str))
+  }
+  function onClear(){
+    paper.project.clear()
   }
   return (
     <div className="flex_container">
       <div className="flex_item">
-        layer1<br />
+        <button onClick={onClear}>clear</button><br />
         <button onClick={onSave}>save</button><br />
+        <button onClick={onLoad}>load</button><br />
         <br />
         <textarea ref={textAreaRef}></textarea>
 
