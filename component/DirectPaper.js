@@ -29,18 +29,24 @@ function getdrawing() {
 }
 export function DirectPaper() {
   let canvas_ref = useRef(null)
+  let textAreaRef = useRef(null)
   useEffect(() => {
 
     paper.setup(canvas_ref.current);
     getdrawing()
 
   })
+  function onSave() {
+    textAreaRef.current.value = 'yoyo'
+  }
   return (
     <div className="flex_container">
       <div className="flex_item">
         layer1<br />
-        layer2<br />
+        <button onClick={onSave}>save</button><br />
         <br />
+        <textarea ref={textAreaRef}></textarea>
+
       </div>
 
       <canvas className='tool_canvas flex_item' ref={canvas_ref}>
