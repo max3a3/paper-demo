@@ -15,7 +15,7 @@ import {DirectPaper} from './component/DirectPaper'
 
 const store = configureStore()
 
-
+  
 class App extends Component {
   constructor() {
     super();
