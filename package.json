@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@psychobolt/react-paperjs": "https://github.com/max3a3/react-paperjs",
+    "@max3a3/react-paperjs": "^0.0.56",
     "acorn": "7.0.0",
     "bootstrap": "4.3.1",
     "hashids": "1.2.2",
