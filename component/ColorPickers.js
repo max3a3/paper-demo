@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from "react";
+import React, {Fragment} from "react";
 import ColorPicker from "react-simple-colorpicker";
 import {Button, UncontrolledPopover, PopoverBody} from 'reactstrap';
 import {useSelector, useDispatch} from "react-redux";

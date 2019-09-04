@@ -10,6 +10,7 @@ import {ColorPickers} from './component/ColorPickers'
 import {CanvasEditor} from './component/CanvasEditor'
 import {ToolSelector} from "./container/ToolSelector";
 import {TooledPaper} from "./container/TooledPaper";
+import {ReduxedEditor} from "./component/ReduxedEditor";
 import {DirectPaper} from './component/DirectPaper'
 
 const store = configureStore()
@@ -23,8 +24,8 @@ class App extends Component {
     };
   }
 
-  rendert()
-  // test of tool
+  renderT()
+  // test of tool TooledPaper
   {
     return (
         <Provider store={store}>
@@ -32,6 +33,19 @@ class App extends Component {
             <ToolSelector/>
             <ColorPickers/>
             <TooledPaper/>
+          </Container>
+        </Provider>
+    );
+  }
+  render()
+  // test of ReduxedPaper
+  {
+    return (
+        <Provider store={store}>
+          <Container>
+            <ToolSelector/>
+            <ColorPickers/>
+            <ReduxedEditor/>
           </Container>
         </Provider>
     );

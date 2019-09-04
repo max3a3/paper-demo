@@ -2,7 +2,7 @@ import ActionTypes from './action_types'
 import {TOOLS} from "../../config";
 
 const initialState = {buttons:'left',
-    tool:TOOLS[0],
+    tool:TOOLS[TOOLS.length-1],
 
     fill:"rgba(223,90,90,1)",
     stroke:"rgba(25,236,163,1)"
