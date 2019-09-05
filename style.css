@@ -14,7 +14,7 @@ h1, p {
 }
 
 .flex_item:nth-child(1) {
-  width:22%;
+  width:42%;
   order: 0;
   flex: 0 1 auto;
   align-self: auto;
