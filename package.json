@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@max3a3/react-paperjs": "^0.0.56",
+    "@max3a3/react-paperjs-editor": "^0.0.11",
+    "@psychobolt/react-paperjs": "0.0.56",
+    "@psychobolt/react-paperjs-editor": "0.0.10",
     "acorn": "7.0.0",
     "bootstrap": "4.3.1",
     "hashids": "1.2.2",

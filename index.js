@@ -38,7 +38,7 @@ class App extends Component {
     );
   }
   render()
-  // test of ReduxedPaper
+  // test of ReduxedPaper inside ReduxedEditor
   {
     return (
         <Provider store={store}>
@@ -57,7 +57,7 @@ class App extends Component {
     return <CanvasEditor/>
   }
 
-  render()
+  renderD()
   // test of direct paper.js usage
   {
     return <DirectPaper/>

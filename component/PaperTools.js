@@ -1,6 +1,6 @@
 import {TOOL_TYPE, TOOLS} from "../config";
 //import {CircleTool, LineTool, RectangleTool} from "@psychobolt/react-paperjs-editor";
-import {CircleTool, LineTool, RectangleTool} from "@psychobolt/react-paperjs/packages/react-paperjs-editor/dist";
+import {CircleTool, LineTool, RectangleTool} from "@max3a3/react-paperjs-editor";
 import React, {Fragment, useRef} from "react";
 import {addPath} from "../store/canvas/actions";
 import {getCanvas} from "../store/canvas/selectors";
