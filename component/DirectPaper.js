@@ -20,7 +20,7 @@ function getdrawing() {
   }
 
   let style = {
-    fillColor: new paper.Color(1, 0, 0), 
+    fillColor: new paper.Color(1, 0, 0),
     // strokeColor: 'black',
     strokeColor: new paper.Color(0, 0.9, 0.5),
     strokeWidth: 2
@@ -30,7 +30,7 @@ function getdrawing() {
 }
 export function DirectPaper() {
   let canvas_ref = useRef(null)
-  let textAreaRef = useRef(null) 
+  let textAreaRef = useRef(null)
   useEffect(() => {
 
     paper.setup(canvas_ref.current);
@@ -65,7 +65,7 @@ export function DirectPaper() {
         <button onClick={onSave}>save</button><br />
         <button onClick={onLoad}>load</button><br />
         <br />
-        <textarea ref={textAreaRef}></textarea>
+        <textarea ref={textAreaRef} className="save_area"></textarea>
 
       </div>
 

@@ -15,7 +15,7 @@ import {DirectPaper} from './component/DirectPaper'
 
 const store = configureStore()
 
-  
+
 class App extends Component {
   constructor() {
     super();
@@ -38,7 +38,7 @@ class App extends Component {
     );
   }
   render()
-  // test of ReduxedPaper inside ReduxedEditor
+  // test of ReduxedPaper
   {
     return (
         <Provider store={store}>

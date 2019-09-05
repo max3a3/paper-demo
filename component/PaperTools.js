@@ -1,10 +1,12 @@
 import {TOOL_TYPE, TOOLS} from "../config";
 //import {CircleTool, LineTool, RectangleTool} from "@psychobolt/react-paperjs-editor";
-import {CircleTool, LineTool, RectangleTool} from "@max3a3/react-paperjs-editor";
+// import {CircleTool, LineTool, RectangleTool} from "@max3a3/react-paperjs-editor";
+import {CircleTool, LineTool} from "@max3a3/react-paperjs-editor";
 import React, {Fragment, useRef} from "react";
 import {addPath} from "../store/canvas/actions";
 import {getCanvas} from "../store/canvas/selectors";
-
+import SelectTool from "./SelectTool";
+import RectangleTool from "./RectangleTool"
 
 let getProperty = {} //todo add all tools entry as returning empty object, some tool like pen won't need this
 
@@ -70,6 +72,8 @@ export function PaperTools({store}) {
             case TOOL_TYPE.RECTANGLE:
                 return <RectangleTool key={tool} ref={inputEl} pathProps={{strokeColor, fillColor}}
                                       onPathAdd={onPathAdd(tool, activeLayer, dispatch)}/>
+            case TOOL_TYPE.SELECT:
+                return <SelectTool key={tool} ref={inputEl}/>
             default:
         }
         return null
