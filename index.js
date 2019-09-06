@@ -1,16 +1,16 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import {render} from 'react-dom';
+import { render } from 'react-dom';
 import './style.css';
 import './colorpicker.scss';
-import {Container} from 'reactstrap'
+import { Container } from 'reactstrap'
 import configureStore from './configure-store'
-import {Provider} from 'react-redux'
-import {ColorPickers} from './component/ColorPickers'
-import {CanvasEditor} from './component/CanvasEditor'
-import {ToolSelector} from "./container/ToolSelector";
-import {TooledPaper} from "./container/TooledPaper";
-import {DirectPaper} from './component/DirectPaper'
+import { Provider } from 'react-redux'
+import { ColorPickers } from './component/ColorPickers'
+import { CanvasEditor } from './component/CanvasEditor'
+import { ToolSelector } from "./container/ToolSelector";
+import { TooledPaper } from "./container/TooledPaper";
+import { DirectPaper } from './component/DirectPaper'
 
 const store = configureStore()
 
@@ -27,27 +27,27 @@ class App extends Component {
   // test of tool
   {
     return (
-        <Provider store={store}>
-          <Container>
-            <ToolSelector/>
-            <ColorPickers/>
-            <TooledPaper/>
-          </Container>
-        </Provider>
+      <Provider store={store}>
+        <Container>
+          <ToolSelector />
+          <ColorPickers />
+          <TooledPaper />
+        </Container>
+      </Provider>
     );
   }
 
   renderx()
   // test of custom object in react-paper
   {
-    return <CanvasEditor/>
+    return <CanvasEditor />
   }
 
   render()
   // test of direct paper.js usage
   {
-    return <DirectPaper/>
+    return <DirectPaper />
   }
 }
 
-render(<App/>, document.getElementById('root'));
+render(<App />, document.getElementById('root'));

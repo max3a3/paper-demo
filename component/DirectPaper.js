@@ -29,31 +29,31 @@ function lines() {
   drawLine([10, 5], style)
   drawLine([70, 5], style)
 }
- function rectangle() {
-    paper.project.clear()
-    let [x, y, width, height] = [30, 10, 80, 30]
-    let rectPath = new paper.Path.Rectangle(x, y, width, height)
-    rectPath.strokeColor = new paper.Color(0, 0.5, 0.9)
-    rectPath.fillColor = new paper.Color(0, 0.5, 0.9)
-    console.log('pathdata',rectPath.pathData)
-    debugger
-    rectPath.bound = new paper.Rectangle(30,10,40,20)
-    console.log('pathdata after transform',rectPath.pathData)
+function rectangle() {
+  paper.project.clear()
+  let [x, y, width, height] = [30, 10, 80, 30]
+  let rectPath = new paper.Path.Rectangle(x, y, width, height)
+  rectPath.strokeColor = new paper.Color(0, 0.5, 0.9)
+  rectPath.fillColor = new paper.Color(0, 0.5, 0.9)
+  console.log('pathdata', rectPath.pathData)
+  debugger
+  rectPath.bounds = new paper.Rectangle(30, 10, 40, 20)
+  console.log('pathdata after transform', rectPath.pathData)
 
-    rectPath.applyMatrix=false
-    rectPath.bound = new paper.Rectangle(30,10,140,220)
-    console.log('pathdata with false applymatrix transform',rectPath.pathData)
+  rectPath.applyMatrix=false
+  rectPath.bounds = new paper.Rectangle(30,10,360,220)
+  console.log('pathdata with false applymatrix transform',rectPath.pathData)
 
-  }
+}
 export function DirectPaper() {
   let canvas_ref = useRef(null)
   let textAreaRef = useRef(null)
- 
+
   useEffect(() => {
 
     paper.setup(canvas_ref.current);
     // lines()
-
+    // rectangle()
   })
   function onSave() {
     let value = paper.project.exportJSON({ asString: false })
