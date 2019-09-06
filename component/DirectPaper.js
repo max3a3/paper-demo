@@ -32,9 +32,17 @@ function lines() {
  function rectangle() {
     paper.project.clear()
     let [x, y, width, height] = [30, 10, 80, 30]
-    let rect = new paper.Path.Rectangle(x, y, width, height)
-    rect.strokeColor = new paper.Color(0, 0.5, 0.9)
-    rect.fillColor = new paper.Color(0, 0.5, 0.9)
+    let rectPath = new paper.Path.Rectangle(x, y, width, height)
+    rectPath.strokeColor = new paper.Color(0, 0.5, 0.9)
+    rectPath.fillColor = new paper.Color(0, 0.5, 0.9)
+    console.log('pathdata',rectPath.pathData)
+    debugger
+    rectPath.bound = new paper.Rectangle(30,10,40,20)
+    console.log('pathdata after transform',rectPath.pathData)
+
+    rectPath.applyMatrix=false
+    rectPath.bound = new paper.Rectangle(30,10,140,220)
+    console.log('pathdata with false applymatrix transform',rectPath.pathData)
 
   }
 export function DirectPaper() {
