@@ -25,16 +25,17 @@ class SelectToolComponent extends React.Component {
   rect
 
   onMouseDown = (toolEvent) => {
+    console.log('select mousddown')
     const { pathProps, onMouseDown, onPathInit, paper } = this.props;
     //toolEvent from paperjs
-    if (toolEvent.event.button === MOUSE_LEFT_CODE) {
+    if (toolEvent.event.type==='touchstart' || toolEvent.event.button === MOUSE_LEFT_CODE) {
       this.mouseDown = toolEvent.point
     }
   }
 
   onMouseDrag = (toolEvent) => {
     //toolEvent from paperjs
-    if (toolEvent.event.buttons === 1) {
+    if (toolEvent.event.type==='touchmove' || toolEvent.event.buttons === 1) {
       const { paper } = this.props;
       this.rect = new paper.Rectangle(this.mouseDown, toolEvent.point);
       // debugger //chck for shift
@@ -78,6 +79,7 @@ class SelectToolComponent extends React.Component {
         {...rest}
         ref={innerRef}
         onMouseDown={this.onMouseDown}
+        onTouchMove={this.onMouseDrag}
         onMouseDrag={this.onMouseDrag}
         onMouseUp={this.onMouseUp}
       />
