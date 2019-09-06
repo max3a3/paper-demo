@@ -1,7 +1,8 @@
 import paper from 'paper'
 import React, { useRef, useEffect } from 'react'
 
-function getdrawing() {
+function lines() {
+  paper.project.clear()
 
   function drawLine(start_pt, stle) {
     //Point data structure has methods for other operation, so it is good
@@ -20,7 +21,7 @@ function getdrawing() {
   }
 
   let style = {
-    fillColor: new paper.Color(1, 0, 0), 
+    fillColor: new paper.Color(1, 0, 0),
     // strokeColor: 'black',
     strokeColor: new paper.Color(0, 0.9, 0.5),
     strokeWidth: 2
@@ -28,13 +29,22 @@ function getdrawing() {
   drawLine([10, 5], style)
   drawLine([70, 5], style)
 }
+ function rectangle() {
+    paper.project.clear()
+    let [x, y, width, height] = [30, 10, 80, 30]
+    let rect = new paper.Path.Rectangle(x, y, width, height)
+    rect.strokeColor = new paper.Color(0, 0.5, 0.9)
+    rect.fillColor = new paper.Color(0, 0.5, 0.9)
+
+  }
 export function DirectPaper() {
   let canvas_ref = useRef(null)
-  let textAreaRef = useRef(null) 
+  let textAreaRef = useRef(null)
+ 
   useEffect(() => {
 
     paper.setup(canvas_ref.current);
-    getdrawing()
+    // lines()
 
   })
   function onSave() {
@@ -49,19 +59,13 @@ export function DirectPaper() {
   function onClear() {
     paper.project.clear()
   }
-  function onObject1() {
-    paper.project.clear()
-    let [x, y, width, height] = [30, 10, 80, 30]
-    let rect = new paper.Path.Rectangle(x, y, width, height)
-    rect.strokeColor = new paper.Color(0, 0.5, 0.9)
-    rect.fillColor = new paper.Color(0, 0.5, 0.9)
 
-  }
   return (
     <div className="flex_container">
       <div className="flex_item">
         <button onClick={onClear}>clear</button><br />
-        <button onClick={onObject1}>object1</button><br />
+        <button onClick={rectangle}>rectangle</button><br />
+        <button onClick={lines}>lines</button><br />
         <button onClick={onSave}>save</button><br />
         <button onClick={onLoad}>load</button><br />
         <br />
