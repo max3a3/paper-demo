@@ -7,7 +7,12 @@ import {addPath} from "../store/canvas/actions";
 import {getCanvas} from "../store/canvas/selectors";
 
 
-let getProperty = {} //todo add all tools entry as returning empty object, some tool like pen won't need this
+let getProperty = TOOLS.reduce(
+  (o,t)=>{
+    o[t]= ()=>{return {}}
+    return o
+  }
+  ,{}) //todo add all tools entry as returning empty object, some tool like pen won't need this
 
 getProperty.LINE = (path) => { // path is paper data, todo use swithc based on object_type param
     const {point: from} = path.firstSegment;
@@ -17,6 +22,7 @@ getProperty.LINE = (path) => { // path is paper data, todo use swithc based on o
         to: {x: to.x, y: to.y},
     };
 }
+/*
 getProperty.CIRCLE = (path) => {
     const {x, y} = path.position;
     return {
@@ -24,6 +30,7 @@ getProperty.CIRCLE = (path) => {
         radius: path.bounds.width / 2,
     };
 }
+*/
 getProperty.RECTANGLE =(path)=> {
     const { x, y } = path.position;
     const { width, height } = path.bounds;
@@ -33,7 +40,9 @@ getProperty.RECTANGLE =(path)=> {
         height,
     };
 }
-getProperty.FREEFORM = ()=>{return {}}
+
+
+// getProperty.FREEFORM = ()=>{return {}}
 const onPathAdd = (object_type, activeLayer, dispatch) => (paperPath,pathProps) => {
 
 
