@@ -1,6 +1,7 @@
 import {TOOL_TYPE, TOOLS} from "../config";
 //import {CircleTool, LineTool, RectangleTool} from "@psychobolt/react-paperjs-editor";
 import {CircleTool, LineTool, RectangleTool} from "@max3a3/react-paperjs-editor";
+import FreeformTool from './FreeformPathTool'
 import React, {Fragment, useRef} from "react";
 import {addPath} from "../store/canvas/actions";
 import {getCanvas} from "../store/canvas/selectors";
@@ -32,6 +33,7 @@ getProperty.RECTANGLE =(path)=> {
         height,
     };
 }
+getProperty.FREEFORM = ()=>{return {}}
 const onPathAdd = (object_type, activeLayer, dispatch) => (paperPath,pathProps) => {
 
 
@@ -69,6 +71,9 @@ export function PaperTools({store}) {
                                    onPathAdd={onPathAdd(tool, activeLayer, dispatch)}/>
             case TOOL_TYPE.RECTANGLE:
                 return <RectangleTool key={tool} ref={inputEl} pathProps={{strokeColor, fillColor}}
+                                      onPathAdd={onPathAdd(tool, activeLayer, dispatch)}/>
+            case TOOL_TYPE.FREEFORM:
+                return <FreeformTool key={tool} ref={inputEl} pathProps={{strokeColor}}
                                       onPathAdd={onPathAdd(tool, activeLayer, dispatch)}/>
             default:
         }

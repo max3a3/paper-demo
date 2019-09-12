@@ -23,7 +23,7 @@ class App extends Component {
       name: 'React'
     };
   }
-
+ 
   renderT()
   // test of tool TooledPaper
   {
