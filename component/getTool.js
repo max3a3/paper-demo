@@ -1,6 +1,6 @@
 import React from 'react';
 import {TOOL_TYPE} from "../config";
-import {LineTool,CircleTool, RectangleTool} from "@psychobolt/react-paperjs-editor";
+import {LineTool,CircleTool, RectangleTool} from "@max3a3/react-paperjs-editor";
 
 // import {LineTool,CircleTool, RectangleTool} from "@psychobolt/react-paperjs/packages/react-paperjs-editor/dist";
 import invariant from 'invariant'
