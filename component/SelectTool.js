@@ -4,7 +4,7 @@ import * as ReactPaperJS from '@psychobolt/react-paperjs';
 import PathTool from "./PathTool.component";
 
 
-const { Tool, PaperScope } = ReactPaperJS;
+const {Tool, PaperScope} = ReactPaperJS;
 const MOUSE_LEFT_CODE = 0;
 
 // $FlowFixMe
@@ -19,36 +19,44 @@ class SelectToolComponent extends React.Component {
       strokeColor: 'black',
     },
   }
+
+  constructor(props) {
+    super(props)
+  }
+
   //instance variable
   mouseDown
   path
-  rect
-
+  selectionColor = null
+  // static member so this is bound properly
   onMouseDown = (toolEvent) => {
-    console.log('select mousddown')
-    const { pathProps, onMouseDown, onPathInit, paper } = this.props;
+    const {pathProps, onMouseDown, onPathInit, paper} = this.props;
     //toolEvent from paperjs
-    if (toolEvent.event.type==='touchstart' || toolEvent.event.button === MOUSE_LEFT_CODE) {
+    if (toolEvent.event.type === 'touchstart' || toolEvent.event.button === MOUSE_LEFT_CODE) {
       this.mouseDown = toolEvent.point
     }
   }
 
+  // static member so this is bound properly
   onMouseDrag = (toolEvent) => {
+
     //toolEvent from paperjs
-    if (toolEvent.event.type==='touchmove' || toolEvent.event.buttons === 1) {
-      const { paper } = this.props;
-      this.rect = new paper.Rectangle(this.mouseDown, toolEvent.point);
+    if (toolEvent.event.type === 'touchmove' || toolEvent.event.buttons === 1) {
+      const {paper} = this.props;
+      if (!this.selectionColor)
+        this.selectionColor = new paper.Color(0.9, 0.9, 1, 0.75)
+
+      let rect = new paper.Rectangle(this.mouseDown, toolEvent.point);
       // debugger //chck for shift
-      if (toolEvent.modifiers.shift) {
-        this.rect.height = this.rect.width;
+      if (toolEvent.modifiers.shift) { //todo still buggy need to look at the custom object creation
+        if (rect.width > rect.height)
+          rect.height = rect.width;
+        else
+          rect.width = rect.height;
       }
 
-      this.path = new paper.Path.Rectangle(this.rect);
-      //todo optimize this with precreated
-      this.path.fillColor = new paper.Color(0.9, 0.9, 1, 0.75)
-      // if(event.modifiers.alt) {
-      //     path.position = mouseDown;
-      // }
+      this.path = new paper.Path.Rectangle(rect);
+      this.path.fillColor = this.selectionColor
 
       // Remove this path on the next drag event:
       this.path.removeOnDrag();
@@ -56,19 +64,13 @@ class SelectToolComponent extends React.Component {
   }
 
   onMouseUp = (event) => {
-    const { path } = this;
-    if (path)
+    const {path} = this;
+    const {onPathAdd} = this.props;
+    if (path) {
       path.remove()
-    // const {pathProps, onMouseUp, onPathAdd} = this.props;
-    // if (path) {
-    //     Object.assign(path, {
-    //         selected: false,
-    //         ...pathProps,
-    //     });
-    //     onPathAdd(path);
-    //     this.path = null;
-    //     this.start = null;
-    // }
+      onPathAdd(path);
+    }
+
   }
 
 
