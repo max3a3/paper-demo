@@ -13,6 +13,12 @@ export function setTool(data) {
     data
   }
 }
+export function setPaper(data) {
+  return {
+    type: ActionTypes.SET_PAPER,
+    data
+  }
+}
 
 export function setToolColor(key, color) {
   return {

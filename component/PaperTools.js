@@ -4,10 +4,13 @@ import {LineTool, RectangleTool,CircleTool} from "@max3a3/react-paperjs-editor";
 // this is for local execution by downloading from github after doing a *build* and *commit*
 // import {CircleTool,LineTool,RectangleTool} from "@psychobolt/react-paperjs/packages/react-paperjs-editor";
 
-import React, {Fragment, useRef} from "react";
+import React, {Fragment, useRef,useEffect} from "react";
 import {addPath, deselectAll, selectPaths} from "../store/canvas/actions";
 import {getCanvas} from "../store/canvas/selectors";
 import SelectTool from "./SelectTool";
+import TransformTool from "./TransformTool";
+import {renderWithPaperScope} from "@psychobolt/react-paperjs";
+import {setPaper} from "../store/ui/actions";
 
 let getProperty = {} //todo add all tools entry as returning empty object, some tool like pen won't need this
 
@@ -96,6 +99,9 @@ export function PaperTools({store}) {
       case TOOL_TYPE.SELECT:
         return <SelectTool key={tool} ref={inputEl}
                            onPathAdd={onSelect(selectedPathIds,activeLayer,dispatch)}/>
+      case TOOL_TYPE.TRANSFORM:
+        return <TransformTool key={tool} ref={inputEl}
+                           onPathAdd={onSelect(selectedPathIds,activeLayer,dispatch)}/>
       default:
     }
     return null
@@ -104,6 +110,19 @@ export function PaperTools({store}) {
   //    and we can't activate here as we don't have the refs? before it is submitted?
   if (refs[current].current)
     refs[current].current.activate()
+
+
+  // only called once, we install a component as that is the only way scope get passed
+  if (!storePaper) {
+    // register paper global to use for debugging
+    const RegisterPaperComp=()=> {
+      return renderWithPaperScope((paper) => {
+        dispatch(setPaper(paper))
+        return null
+      })
+    }
+    tool_components.push(<RegisterPaperComp/>)
+  }
   return (
       <Fragment>
         {tool_components}
