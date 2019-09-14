@@ -36,7 +36,7 @@ export function DirectPaper() {
     paper.setup(canvas_ref.current);
     getdrawing()
 
-  })
+  },[])
   function onSave() {
     let value = paper.project.exportJSON({ asString: false })
     textAreaRef.current.value = JSON.stringify(value, undefined, 2)
