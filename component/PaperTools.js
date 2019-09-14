@@ -80,7 +80,7 @@ export function PaperTools({store}) {
   // require the redux store to be passed as this is non dom react, different tree
 
   let refs = {}
-  const {tool: current, stroke: strokeColor, fill: fillColor} = store.getState().ui
+  const {tool: current, stroke: strokeColor, fill: fillColor,paper:storePaper} = store.getState().ui
   let dispatch = store.dispatch
   let {activeLayer,selectedPathIds} = getCanvas(store.getState())
   let tool_components = TOOLS.map(function useCallGt(tool) {
