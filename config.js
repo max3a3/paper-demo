@@ -3,6 +3,7 @@ export const TOOL_TYPE = keyMirror({
     LINE: null,
     CIRCLE: null,
     RECTANGLE:null,
+    TRANSFORM:null,
     SELECT:null,
 
 })
