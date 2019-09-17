@@ -51,13 +51,13 @@ class App extends Component {
     );
   }
 
-  renderx()
+  render()
   // test of custom object in react-paper
   {
     return <CanvasEditor />
   }
 
-  render()
+  renderd()
   // test of direct paper.js usage
   {
     return <DirectPaper />

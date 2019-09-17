@@ -24,19 +24,21 @@ function StarCreate(paper, props) {
   return group
 }
 
+let Type = 'CustomStar'  //match the custom type registered in renderer
 
 // register custom type here
-class MyPaperRenderer extends PaperRenderer {
+class MyPaperRenderer extends PaperRenderer { 
   getInstanceFactory() {
     return {
       ...this.defaultTypes,
-      MyCustomStencil: (props, paper) => StarCreate(paper, props),
+      [Type]: (props, paper) => StarCreate(paper, props),
 
     };
   }
 }
 
-// need to transform the type as React object, have to do this so it can handle ref
+/* if you have several custom type this is more efficient
+// need to transform the type as React object, have to do so it can handle ref
 let customType = { MyCustomStencil: 'MyCustomStencil' }
 let customComp = Object.entries(customType).reduce((types, [key, Type]) => {
   return ({
@@ -45,12 +47,13 @@ let customComp = Object.entries(customType).reduce((types, [key, Type]) => {
     [key]: React.forwardRef((props, ref) => <Type ref={ref} {...props} />),
   })
 }, {})
-
-let MyCustomStencil = customComp.MyCustomStencil
+// let MyCustomStencilComp = customComp.MyCustomStencil
+*/
 
 
 //this is the component
-// let MyCustomStencil = React.forwardRef((props, ref) => <MyCustomStencil ref={ref} {...props} />)
+// create the React wrapper with a Type variable so compile time can pass
+let StarComponent = React.forwardRef((props, ref) => <Type ref={ref} {...props} />)
 
 
 
@@ -62,7 +65,7 @@ export function CanvasEditor() {
       <br />
     </div>
     <PaperContainer className="flex_item" canvasProps={{ className: 'tool_canvas' }} renderer={MyPaperRenderer}>
-      <MyCustomStencil position={[90, 60]} width={90}
+      <StarComponent position={[90, 60]} width={43}
         height={60}
         strokeColor="red"
         fillColor="green"
