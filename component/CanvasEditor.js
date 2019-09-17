@@ -1,8 +1,8 @@
-import {  PaperContainer, PaperRenderer} from '@psychobolt/react-paperjs';
+import { PaperContainer, PaperRenderer } from '@psychobolt/react-paperjs';
 import React from 'react';
 
 // custom type creator
-function MyCustomStencilCreate(paper, props) {
+function StarCreate(paper, props) {
   var num_points = 32
   var group = new paper.Group()
   var i = 9
@@ -30,7 +30,7 @@ class MyPaperRenderer extends PaperRenderer {
   getInstanceFactory() {
     return {
       ...this.defaultTypes,
-      MyCustomStencil: (props, paper) => MyCustomStencilCreate(paper, props),
+      MyCustomStencil: (props, paper) => StarCreate(paper, props),
 
     };
   }
@@ -46,7 +46,11 @@ let customComp = Object.entries(customType).reduce((types, [key, Type]) => {
   })
 }, {})
 
-let MyCustomStencil = customComp.MyCustomStencil
+// let MyCustomStencil = customComp.MyCustomStencil
+
+
+
+let MyCustomStencil = React.forwardRef((props, ref) => <MyCustomStencil ref={ref} {...props} />)
 
 
 
