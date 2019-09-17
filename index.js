@@ -37,7 +37,7 @@ class App extends Component {
       </Provider>
     );
   }
-  render()
+  renderD()
   // test of ReduxedPaper inside ReduxedEditor
   {
     return (
@@ -51,13 +51,13 @@ class App extends Component {
     );
   }
 
-  renderX()
+  renderx()
   // test of custom object in react-paper
   {
     return <CanvasEditor />
   }
 
-  renderD()
+  render()
   // test of direct paper.js usage
   {
     return <DirectPaper />

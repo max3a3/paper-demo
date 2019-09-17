@@ -46,11 +46,11 @@ let customComp = Object.entries(customType).reduce((types, [key, Type]) => {
   })
 }, {})
 
-// let MyCustomStencil = customComp.MyCustomStencil
+let MyCustomStencil = customComp.MyCustomStencil
 
 
 //this is the component
-let MyCustomStencil = React.forwardRef((props, ref) => <MyCustomStencil ref={ref} {...props} />)
+// let MyCustomStencil = React.forwardRef((props, ref) => <MyCustomStencil ref={ref} {...props} />)
 
 
 
