@@ -1,0 +1,5 @@
+in index.js change which render() is called
+
+demo of custom paper object
+
+demo of hooks and redux
