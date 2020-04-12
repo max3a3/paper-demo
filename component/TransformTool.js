@@ -77,12 +77,17 @@ class TransformToolComponent extends React.Component {
   };
   // static member so this is bound properly
   onMouseDown = (toolEvent) => {
+
+    /*
+
+     */
+
     const {pathProps, onMouseDown, onPathInit, paper} = this.props;
     //toolEvent from paperjs
     if (toolEvent.event.type === 'touchstart' || toolEvent.event.button === MOUSE_LEFT_CODE) {
       this._lastMousePos = toolEvent.point;
 
-      if(this.transform.hoverDrag) {
+      if(this.transform.hoverDrag) {  // this flag is set in mouseMove
         // action.move = new Action('move', {
         //   paths: localSelect,
         //   startPos: toolEvent.point,
@@ -118,7 +123,9 @@ class TransformToolComponent extends React.Component {
         });
         return;
       }
-
+      if(this.transform.scaling) {
+        return this.mouseScale(e)
+      }
       // User is scaling the selection
     }
   }
@@ -230,8 +237,75 @@ class TransformToolComponent extends React.Component {
 
     this.transformRect = transformRect
   }
+/* not yet
+  mouseScale = () => {
+    // User is scaling the selection
+      var bounds = this.transformRect.bounds;
+      let relH,relW
+      if(!lockScaleY) {
+        relH = e.point.subtract(point).y;
+        transform.scale_facH = Math.abs(relH)/bounds.height;
+      }
+      else {
+        transform.scale_facH = 1;
+      }
+      if(!lockScaleX) {
+        relW = e.point.subtract(point).x;
+        transform.scale_facW = Math.abs(relW)/bounds.width;
+      }
+      else {
+        transform.scale_facW = 1;
+      }
 
+      if(Math.abs(transform.scale_facH) < 0.1 && !lockScaleY) {
+        return;
+      }
 
+      if(Math.abs(transform.scale_facW) < 0.1 && !lockScaleX) {
+        return;
+      }
+
+      if(!e.modifiers.shift) {
+        checkScaleFlip();
+      }
+
+      if(e.modifiers.shift) {
+        var min = Math.min(Math.abs(transform.scale_facH), Math.abs(transform.scale_facW));
+
+        if(lockScaleY) {
+          min = Math.abs(transform.scale_facW);
+        }
+        else if(lockScaleX) {
+          min = Math.abs(transform.scale_facH);
+        }
+
+        transform.scale_facH = min;
+        transform.scale_facW = min;
+      }
+
+      if(e.modifiers.control) {
+        if(!lockScaleX) {
+          transform.scale_facW *= 2;
+        }
+        if(!lockScaleY) {
+          transform.scale_facH *= 2;
+        }
+      }
+
+      // Scale all the selected items
+      for(var i=0; i<localSelect.length; i++) {
+        localSelect[i].scale(transform.scale_facW, transform.scale_facH, point)
+      }
+
+      transformRect.scale(transform.scale_facW, transform.scale_facH, point);
+
+      // Don't show the points while scaling
+      Object.keys(transformPoints).forEach((point, index) => {
+        transformPoints[point].remove();
+      });
+  }
+
+ */
   onActivate = ()=>{
     if (!this.paper.project) return // react-paper call this when being rendered
 
@@ -254,6 +328,40 @@ class TransformToolComponent extends React.Component {
     document.body.style.cursor = "default";
     this.transform.hover = false;
 
+    /* remove mouse hover highlight */
+    // if (this.hoverItem) {
+    //   this.hoverItem = null;
+    //   this.hoverSelection.remove();
+    // }
+
+
+
+    /* check if mouse in scale corner */
+    if (e.item) {
+      let hoverItem = e.item;
+      // draw selection over, this is not in transformtool but in select tool
+      // if(hoverItem.selectable && !hoverItem.selected) {
+      //   hoverSelection = hoverItem.clone();
+      //   hoverSelection.strokeColor = '#33b5ff';
+      //   hoverSelection.strokeWidth = 2 / paper.view.zoom;
+      //
+      //   hoverSelection.selectable = false;
+      // }
+      // else {
+      console.log("hover item type", e.item.type) // shoudl use data instead of type
+      if(hoverItem.type == 'transformPoint') {
+        document.body.style.cursor = hoverItem.cursorType;
+
+        this.transform.hover = true;
+        this.transform.pivot = hoverItem.opposite;
+
+      return //------------>
+      }
+
+    }
+
+    /* check if mouse in the selection rectangle */
+
     // if(self.SELECTED.length != 0)
     {
       if(e.point.isInside(this.lastTransformRect) && !this.transform.hover && !this.transform.scaling) {
@@ -261,6 +369,8 @@ class TransformToolComponent extends React.Component {
         this.transform.hoverDrag = true;
       }
     }
+
+
 
   }
 

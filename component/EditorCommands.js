@@ -39,7 +39,6 @@ export function EditorCommands() {
 
   return (
       <Fragment>
-        layer1<br/>
         <Button onClick={onNew}>new</Button>
         <Button onClick={onSave}>save</Button>
         <Button onClick={onLoad}>load</Button>

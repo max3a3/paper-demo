@@ -13,6 +13,11 @@ export function ReduxedPaper() {
   // need paths as dummy variable to get rerender
   let {layers,paths} = useSelector(state => getCanvas(state))
 
+  // usage of ReactReduxContext.Consumer for react paper as it can not use hook
+  //   component under PaperContainer are not dom component, so need to get the store manually
+  //    and pass it to them
+
+  // there is another way to get the store using   useContext  var reduxContext = useContext(ReactReduxContext);  const globalStore = () => reduxContext.store.getState()
   return (
       <ReactReduxContext.Consumer>
         {({store}) =>
