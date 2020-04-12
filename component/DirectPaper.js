@@ -1,7 +1,8 @@
 import paper from 'paper'
 import React, { useRef, useEffect } from 'react'
 
-function getdrawing() {
+function lines() {
+  paper.project.clear()
 
   function drawLine(start_pt, stle) {
     //Point data structure has methods for other operation, so it is good
@@ -27,6 +28,22 @@ function getdrawing() {
   };
   drawLine([10, 5], style)
   drawLine([70, 5], style)
+}
+function rectangle() {
+  paper.project.clear()
+  let [x, y, width, height] = [30, 10, 80, 30]
+  let rectPath = new paper.Path.Rectangle(x, y, width, height)
+  rectPath.strokeColor = new paper.Color(0, 0.5, 0.9)
+  rectPath.fillColor = new paper.Color(0, 0.5, 0.9)
+  console.log('pathdata', rectPath.pathData)
+  debugger
+  rectPath.bounds = new paper.Rectangle(30, 10, 40, 20)
+  console.log('pathdata after transform', rectPath.pathData)
+
+  rectPath.applyMatrix=false
+  rectPath.bounds = new paper.Rectangle(30,10,360,220)
+  console.log('pathdata with false applymatrix transform',rectPath.pathData)
+
 }
 export function DirectPaper() {
   let canvas_ref = useRef(null)
@@ -61,7 +78,8 @@ export function DirectPaper() {
     <div className="flex_container">
       <div className="flex_item">
         <button onClick={onClear}>clear</button><br />
-        <button onClick={onObject1}>object1</button><br />
+        <button onClick={rectangle}>rectangle</button><br />
+        <button onClick={lines}>lines</button><br />
         <button onClick={onSave}>save</button><br />
         <button onClick={onLoad}>load</button><br />
         <br />
