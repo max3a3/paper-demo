@@ -48,13 +48,12 @@ function rectangle() {
 export function DirectPaper() {
   let canvas_ref = useRef(null)
   let textAreaRef = useRef(null)
-
   useEffect(() => {
 
     paper.setup(canvas_ref.current);
-    // lines()
-    // rectangle()
-  })
+    getdrawing()
+
+  },[])
   function onSave() {
     let value = paper.project.exportJSON({ asString: false })
     textAreaRef.current.value = JSON.stringify(value, undefined, 2)
@@ -84,7 +83,7 @@ export function DirectPaper() {
         <button onClick={onSave}>save</button><br />
         <button onClick={onLoad}>load</button><br />
         <br />
-        <textarea ref={textAreaRef}></textarea>
+        <textarea ref={textAreaRef} className="save_area"></textarea>
 
       </div>
 

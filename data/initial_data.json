@@ -1,0 +1,54 @@
+{
+  "paths": {
+    "2WY78143p": {
+      "id": "2WY78143p",
+      "type": "RECTANGLE",
+      "pathData": "M187.06732,161.94231v-74h72v74z",
+      "strokeColor": "rgba(25,236,163,1)",
+      "fillColor": "rgba(223,90,90,1)",
+      "layer": "W9",
+      "properties": {
+        "position": {
+          "x": 223.06732177734375,
+          "y": 124.94231033325195
+        },
+        "width": 72,
+        "height": 74
+      }
+    },
+    "6VDyJ2w8r": {
+      "id": "6VDyJ2w8r",
+      "type": "RECTANGLE",
+      "pathData": "M368.06732,210.94231v-94h90v94z",
+      "strokeColor": "rgba(25,236,163,1)",
+      "fillColor": "rgba(223,90,90,1)",
+      "layer": "W9",
+      "properties": {
+        "position": {
+          "x": 413.06732177734375,
+          "y": 163.94231033325195
+        },
+        "width": 90,
+        "height": 94
+      }
+    }
+  },
+  "pathIds": [
+    "2WY78143p",
+    "6VDyJ2w8r"
+  ],
+  "selectedPathIds": [],
+  "layers": {
+    "W9": {
+      "id": "W9",
+      "pathIds": [
+        "2WY78143p",
+        "6VDyJ2w8r"
+      ]
+    }
+  },
+  "layerIds": [
+    "W9"
+  ],
+  "activeLayer": "W9"
+}

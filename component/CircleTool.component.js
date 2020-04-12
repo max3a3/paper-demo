@@ -35,7 +35,7 @@ class CircleToolComponent extends PathTool {
         onMouseDown(toolEvent);
     }
 
-    onMouseDrag = (toolEvent) => {
+    onMouseDragx = (toolEvent) => {
         const {onMouseDrag} = this.props;
         if (toolEvent.event.buttons === 1) {
             const {path} = this;
@@ -50,6 +50,14 @@ class CircleToolComponent extends PathTool {
         }
         onMouseDrag(toolEvent);
     }
+    onMouseDrag = (toolEvent) => {
+        const {onMouseDrag} = this.props;
+        if (toolEvent.event.buttons === 1) {
+            const {path} = this;
+            path.scale(toolEvent.point.getDistance(path.position) / (path.bounds.width / 2));
+        }
+        onMouseDrag(toolEvent);
+    }
 
     onMouseUp = (event) => {
         const {path} = this;
@@ -59,7 +67,7 @@ class CircleToolComponent extends PathTool {
                 selected: false,
                 ...pathProps,
             });
-            onPathAdd(path);
+            onPathAdd(path,pathProps);
             this.path = null;
         }
         onMouseUp(event);
@@ -74,6 +82,7 @@ class CircleToolComponent extends PathTool {
                 onMouseDown={this.onMouseDown}
                 onMouseDrag={this.onMouseDrag}
                 onMouseUp={this.onMouseUp}
+                minDistance={1}
             />
         );
     }
