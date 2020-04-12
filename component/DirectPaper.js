@@ -1,7 +1,7 @@
 import paper from 'paper'
 import React, { useRef, useEffect } from 'react'
 
-function lines() {
+function getdrawing() {
   paper.project.clear()
 
   function drawLine(start_pt, stle) {
@@ -79,7 +79,7 @@ export function DirectPaper() {
       <div className="flex_item">
         <button onClick={onClear}>clear</button><br />
         <button onClick={rectangle}>rectangle</button><br />
-        <button onClick={lines}>lines</button><br />
+        <button onClick={getdrawing}>lines</button><br />
         <button onClick={onSave}>save</button><br />
         <button onClick={onLoad}>load</button><br />
         <br />
