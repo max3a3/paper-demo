@@ -5,6 +5,7 @@ export const INITIAL_STATE = {
   ids: [],
   swatches: {}
 };
+// no need return unless changing whole tree https://github.com/immerjs/immer/blob/master/docs/return.md
 const reducer = (state = INITIAL_STATE, action) =>
     produce(state, draft => {
       switch (action.type) {
@@ -14,8 +15,6 @@ const reducer = (state = INITIAL_STATE, action) =>
           draft.swatches[id] = action.payload
           break
         }
-        default:
-          return draft;
       }
 
     });

@@ -12,6 +12,7 @@ import {ToolSelector} from "./container/ToolSelector";
 import {TooledPaper} from "./container/TooledPaper";
 import {ReduxedEditor} from "./component/ReduxedEditor";
 import {DirectPaper} from './component/DirectPaper'
+import SwatchButtons from "./component/SwatchButtons";
 
 const store = configureStore()
 
@@ -45,6 +46,7 @@ class App extends Component {
           <Container>
             <ToolSelector/>
             <ColorPickers/>
+            <SwatchButtons/>
             <ReduxedEditor/>
           </Container>
         </Provider>

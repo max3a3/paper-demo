@@ -103,6 +103,7 @@ export function PaperTools({store}) {
         return <TransformTool key={tool} ref={inputEl}
                            onPathAdd={onSelect(selectedPathIds,activeLayer,dispatch)}/>
       default:
+        debugger
     }
     return null
   })
@@ -121,7 +122,7 @@ export function PaperTools({store}) {
         return null
       })
     }
-    tool_components.push(<RegisterPaperComp/>)
+    tool_components.push(<RegisterPaperComp key={"RegisterPaperComp"}/>)
   }
   return (
       <Fragment>
