@@ -35,7 +35,7 @@ class CircleToolComponent extends PathTool {
         onMouseDown(toolEvent);
     }
 
-    onMouseDragx = (toolEvent) => {
+    onMouseDrag = (toolEvent) => {
         const {onMouseDrag} = this.props;
         if (toolEvent.event.buttons === 1) {
             const {path} = this;
@@ -50,7 +50,7 @@ class CircleToolComponent extends PathTool {
         }
         onMouseDrag(toolEvent);
     }
-    onMouseDrag = (toolEvent) => {
+    onMouseDragx = (toolEvent) => {
         const {onMouseDrag} = this.props;
         if (toolEvent.event.buttons === 1) {
             const {path} = this;
