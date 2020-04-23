@@ -13,6 +13,9 @@ import {TooledPaper} from "./container/TooledPaper";
 import {ReduxedEditor} from "./component/ReduxedEditor";
 import {DirectPaper} from './component/DirectPaper'
 import SwatchButtons from "./component/SwatchButtons";
+import { DndProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import DragCircleButton from "./component/DragCircleButton";
 
 const store = configureStore()
 
@@ -43,12 +46,15 @@ class App extends Component {
   {
     return (
         <Provider store={store}>
+          <DndProvider backend={HTML5Backend}>
           <Container>
             <ToolSelector/>
+            <DragCircleButton/>
             <ColorPickers/>
             <SwatchButtons/>
             <ReduxedEditor/>
           </Container>
+          </DndProvider>
         </Provider>
     );
   }
