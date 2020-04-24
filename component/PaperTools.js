@@ -9,6 +9,7 @@ import {addPath, deselectAll, selectPaths} from "../store/canvas/actions";
 import {getCanvas} from "../store/canvas/selectors";
 import SelectTool from "./SelectTool";
 import CircleTool from "./CircleTool.component"
+import PolygonTool from "./PolygonTool.component"
 import TransformTool from "./TransformTool";
 import {renderWithPaperScope} from "@psychobolt/react-paperjs";
 import {setPaper} from "../store/ui/actions";
@@ -39,6 +40,15 @@ getProperty.RECTANGLE = (path) => {
     height,
   };
 }
+getProperty.POLYGON = (path) => {
+  const {x, y} = path.position;
+  const {width, height} = path.bounds;
+  return {
+    position: {x, y},
+    points: path.segments.map(segment => ({ x: segment.point.x, y: segment.point.y })),
+  };
+}
+
 const onPathAdd = (object_type, activeLayer, dispatch) => (paperPath, pathProps) => {
 
 
@@ -93,6 +103,9 @@ export function PaperTools({store}) {
                          onPathAdd={onPathAdd(tool, activeLayer, dispatch)}/>
       case TOOL_TYPE.CIRCLE:
         return <CircleTool key={tool} ref={inputEl} pathProps={{strokeColor, fillColor}}
+                           onPathAdd={onPathAdd(tool, activeLayer, dispatch)}/>
+      case TOOL_TYPE.POLYGON:
+        return <PolygonTool key={tool} ref={inputEl} pathProps={{strokeColor, fillColor}}
                            onPathAdd={onPathAdd(tool, activeLayer, dispatch)}/>
       case TOOL_TYPE.RECTANGLE:
         return <RectangleTool key={tool} ref={inputEl} pathProps={{strokeColor, fillColor}}
