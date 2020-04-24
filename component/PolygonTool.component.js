@@ -103,9 +103,8 @@ class PolygonToolComponent extends PathTool {
     const bounds = new Path.Circle({
       center: segment.point,
       radius: 7,
-      // strokeColor:"black",
       fillColor: 'white',
-      opacity: 0//1,
+      opacity: 0,   // set it to remove display
     });
     bounds.on('mousedown', () => {
       if (!path.closed

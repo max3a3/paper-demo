@@ -105,7 +105,7 @@ export function PaperTools({store}) {
         return <CircleTool key={tool} ref={inputEl} pathProps={{strokeColor, fillColor}}
                            onPathAdd={onPathAdd(tool, activeLayer, dispatch)}/>
       case TOOL_TYPE.POLYGON:
-        return <PolygonTool key={tool} ref={inputEl} pathProps={{strokeColor, fillColor}}
+        return <PolygonTool key={tool} ref={inputEl} pathProps={{strokeColor, fillColor,selected:true}}
                            onPathAdd={onPathAdd(tool, activeLayer, dispatch)}/>
       case TOOL_TYPE.RECTANGLE:
         return <RectangleTool key={tool} ref={inputEl} pathProps={{strokeColor, fillColor}}
