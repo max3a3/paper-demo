@@ -10,7 +10,7 @@
     "bootstrap": "4.3.1",
     "hashids": "1.2.2",
     "invariant": "2.2.4",
-    "jquery": "3.4.1",
+    "jquery": "3.5.0",
     "paper": "0.12.3",
     "popper.js": "1.15.0",
     "prop-types": "15.7.2",
