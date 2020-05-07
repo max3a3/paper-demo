@@ -3,209 +3,128 @@ import '../styles/tree.css';
 import React, {Fragment, useRef, useEffect} from 'react';
 import Tree, { TreeNode } from 'rc-tree'
 import PropTypes from 'prop-types';
-const treeData = [
-  {
-    key: '0-0',
-    title: 'parent 1',
-    children: [
-      { key: '0-0-0', title: 'parent 1-1', children: [{ key: '0-0-0-0', title: 'parent 1-1-0' }] },
-      {
-        key: '0-0-1',
-        title: 'parent 1-2',
-        children: [
-          { key: '0-0-1-0', title: 'parent 1-2-0', disableCheckbox: true },
-          { key: '0-0-1-1', title: 'parent 1-2-1' },
-          { key: '0-0-1-2', title: 'parent 1-2-2' },
-          { key: '0-0-1-3', title: 'parent 1-2-3' },
-          { key: '0-0-1-4', title: 'parent 1-2-4' },
-          { key: '0-0-1-5', title: 'parent 1-2-5' },
-          { key: '0-0-1-6', title: 'parent 1-2-6' },
-          { key: '0-0-1-7', title: 'parent 1-2-7' },
-          { key: '0-0-1-8', title: 'parent 1-2-8' },
-          { key: '0-0-1-9', title: 'parent 1-2-9' },
-          { key: 1128, title: 1128 },
-        ],
-      },
-    ],
-  },
-];
+import { gData } from './TreeData';
 
 export class TreeTest extends React.Component {
-  static propTypes = {
-    keys: PropTypes.array,
+  state = {
+    gData,
+    autoExpandParent: true,
+    expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key'],
   };
 
-  static defaultProps = {
-    keys: ['0-0-0-0'],
+  onDragStart = info => {
+    console.log('start', info);
   };
 
-  constructor(props) {
-    super(props);
-    const { keys } = props;
-    this.state = {
-      defaultExpandedKeys: keys,
-      defaultSelectedKeys: keys,
-      defaultCheckedKeys: keys,
+  onDragEnter = info => {
+    console.log('enter', info);
+    this.setState({
+      expandedKeys: info.expandedKeys,
+    });
+  };
+
+  onDrop = info => {
+    console.log('drop', info);
+    const dropKey = info.node.props.eventKey;
+    const dragKey = info.dragNode.props.eventKey;
+    const dropPos = info.node.props.pos.split('-');
+    const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
+
+    const loop = (data, key, callback) => {
+      data.forEach((item, index, arr) => {
+        if (item.key === key) {
+          callback(item, index, arr);
+          return;
+        }
+        if (item.children) {
+          loop(item.children, key, callback);
+        }
+      });
     };
+    const data = [...this.state.gData];
 
-    this.treeRef = React.createRef();
-  }
+    // Find dragObject
+    let dragObj;
+    loop(data, dragKey, (item, index, arr) => {
+      arr.splice(index, 1);
+      dragObj = item;
+    });
+
+    if (!info.dropToGap) {
+      // Drop on the content
+      loop(data, dropKey, item => {
+        item.children = item.children || [];
+        // where to insert 示例添加到尾部，可以是随意位置
+        item.children.push(dragObj);
+      });
+    } else if (
+        (info.node.props.children || []).length > 0 && // Has children
+        info.node.props.expanded && // Is expanded
+        dropPosition === 1 // On the bottom gap
+    ) {
+      loop(data, dropKey, item => {
+        item.children = item.children || [];
+        // where to insert 示例添加到尾部，可以是随意位置
+        item.children.unshift(dragObj);
+      });
+    } else {
+      // Drop on the gap
+      let ar;
+      let i;
+      loop(data, dropKey, (item, index, arr) => {
+        ar = arr;
+        i = index;
+      });
+      if (dropPosition === -1) {
+        ar.splice(i, 0, dragObj);
+      } else {
+        ar.splice(i + 1, 0, dragObj);
+      }
+    }
+
+    this.setState({
+      gData: data,
+    });
+  };
 
   onExpand = expandedKeys => {
     console.log('onExpand', expandedKeys);
-  };
-
-  onSelect = (selectedKeys, info) => {
-    console.log('selected', selectedKeys, info);
-    this.selKey = info.node.props.eventKey;
-  };
-
-  onCheck = (checkedKeys, info) => {
-    console.log('onCheck', checkedKeys, info);
-  };
-
-  onEdit = () => {
-    setTimeout(() => {
-      console.log('current key: ', this.selKey);
-    }, 0);
-  };
-
-  onDel = e => {
-    if (!window.confirm('sure to delete?')) {
-      return;
-    }
-    e.stopPropagation();
-  };
-
-  setTreeRef = tree => {
-    this.tree = tree;
+    this.setState({
+      expandedKeys,
+      autoExpandParent: false,
+    });
   };
 
   render() {
-    const customLabel = (
-        <span className="cus-label">
-        <span>operations: </span>
-        <span style={{ color: 'blue' }} onClick={this.onEdit}>
-          Edit
-        </span>
-          &nbsp;
-          <label onClick={e => e.stopPropagation()}>
-          <input type="checkbox" /> checked
-        </label>
-          &nbsp;
-          <span style={{ color: '#EB0000' }} onClick={this.onDel}>
-          Delete
-        </span>
-      </span>
-    );
-
+    const loop = data =>
+        data.map(item => {
+          if (item.children && item.children.length) {
+            return (
+                <TreeNode key={item.key} title={item.title}>
+                  {loop(item.children)}
+                </TreeNode>
+            );
+          }
+          return <TreeNode key={item.key} title={item.title} />;
+        });
     return (
-        <div style={{ margin: '0 20px' }}>
-          <h2>simple</h2>
-          <input aria-label="good" />
-          <Tree
-              ref={this.setTreeRef}
-              className="myCls"
-              showLine
-              checkable
-              defaultExpandAll
-              defaultExpandedKeys={this.state.defaultExpandedKeys}
-              onExpand={this.onExpand}
-              defaultSelectedKeys={this.state.defaultSelectedKeys}
-              defaultCheckedKeys={this.state.defaultCheckedKeys}
-              onSelect={this.onSelect}
-              onCheck={this.onCheck}
-              onActiveChange={key => console.log('Active:', key)}
-          >
-            <TreeNode title="parent 1" key="0-0">
-              <TreeNode title={customLabel} key="0-0-0">
-                <TreeNode title="leaf" key="0-0-0-0" style={{ background: 'rgba(255, 0, 0, 0.1)' }} />
-                <TreeNode title="leaf" key="0-0-0-1" />
-              </TreeNode>
-              <TreeNode title="parent 1-1" key="0-0-1">
-                <TreeNode title="parent 1-1-0" key="0-0-1-0" disableCheckbox />
-                <TreeNode title="parent 1-1-1" key="0-0-1-1" />
-              </TreeNode>
-              <TreeNode title="parent 1-2" key="0-0-2" disabled>
-                <TreeNode title="parent 1-2-0" key="0-0-2-0" checkable={false} />
-                <TreeNode title="parent 1-2-1" key="0-0-2-1" />
-              </TreeNode>
-            </TreeNode>
-          </Tree>
-
-          <h2>Check on Click TreeNode</h2>
-          <Tree
-              className="myCls"
-              showLine
-              checkable
-              selectable={false}
-              defaultExpandAll
-              onExpand={this.onExpand}
-              defaultSelectedKeys={this.state.defaultSelectedKeys}
-              defaultCheckedKeys={this.state.defaultCheckedKeys}
-              onSelect={this.onSelect}
-              onCheck={this.onCheck}
-              treeData={treeData}
-          />
-
-          <h2>Select</h2>
-          <Tree
-              ref={this.treeRef}
-              className="myCls"
-              defaultExpandAll
-              treeData={treeData}
-              onSelect={this.onSelect}
-              height={150}
-          />
-
-          <button
-              type="button"
-              onClick={() => {
-                setTimeout(() => {
-                  console.log('scroll!!!');
-                  this.treeRef.current.scrollTo({ key: '0-0-1-9' });
-                }, 100);
-              }}
-          >
-            Scroll Last
-          </button>
+        <div className="draggable-demo">
+          <h2>draggable</h2>
+          <p>drag a node into another node</p>
+          <div className="draggable-container">
+            <Tree
+                expandedKeys={this.state.expandedKeys}
+                onExpand={this.onExpand}
+                autoExpandParent={this.state.autoExpandParent}
+                draggable
+                onDragStart={this.onDragStart}
+                onDragEnter={this.onDragEnter}
+                onDrop={this.onDrop}
+            >
+              {loop(this.state.gData)}
+            </Tree>
+          </div>
         </div>
     );
   }
-}
-
-
-export function TreeTest0() {
-  let customLabel =3
-
-  return         <Tree
-      ref={this.setTreeRef}
-      className="myCls"
-      showLine
-      checkable
-      defaultExpandAll
-      // defaultExpandedKeys={this.state.defaultExpandedKeys}
-      onExpand={this.onExpand}
-      // defaultSelectedKeys={this.state.defaultSelectedKeys}
-      // defaultCheckedKeys={this.state.defaultCheckedKeys}
-      // onSelect={this.onSelect}
-      // onCheck={this.onCheck}
-      onActiveChange={key => console.log('Active:', key)}
-  >
-    <TreeNode title="parent 1" key="0-0">
-      <TreeNode title={customLabel} key="0-0-0">
-        <TreeNode title="leaf" key="0-0-0-0" style={{ background: 'rgba(255, 0, 0, 0.1)' }} />
-        <TreeNode title="leaf" key="0-0-0-1" />
-      </TreeNode>
-      <TreeNode title="parent 1-1" key="0-0-1">
-        <TreeNode title="parent 1-1-0" key="0-0-1-0" disableCheckbox />
-        <TreeNode title="parent 1-1-1" key="0-0-1-1" />
-      </TreeNode>
-      <TreeNode title="parent 1-2" key="0-0-2" disabled>
-        <TreeNode title="parent 1-2-0" key="0-0-2-0" checkable={false} />
-        <TreeNode title="parent 1-2-1" key="0-0-2-1" />
-      </TreeNode>
-    </TreeNode>
-  </Tree>
-
 }
