@@ -15,10 +15,17 @@ import {DirectPaper} from './component/DirectPaper'
 import SwatchButtons from "./component/SwatchButtons";
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import {createDragDropManager} from 'dnd-core'
 import DragCircleButton from "./component/DragCircleButton";
+import HTML5BackendExt from "./HTML5BackendExt";
 
 const store = configureStore()
 
+
+let _HTML5BackendExt = (
+    manager,
+    context,
+) => new HTML5BackendExt(manager, context)
 
 class App extends Component {
   constructor() {
@@ -46,7 +53,8 @@ class App extends Component {
   {
     return (
         <Provider store={store}>
-          <DndProvider backend={HTML5Backend}>
+          <DndProvider backend={_HTML5BackendExt}>
+          {/*<DndProvider backend={HTML5Backend}>*/}
           <Container>
             <ToolSelector/>
             <DragCircleButton/>

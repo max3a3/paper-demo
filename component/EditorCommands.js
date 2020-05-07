@@ -5,6 +5,7 @@ import {loadCanvasData, newCanvas} from "../store/canvas/actions";
 import initial_data from "../data/initial_data.json"
 import config from '../data/config.json'
 import {CursorTest} from '../test-component/CursorTest'
+import {TreeTest} from './TreeTest'
 export function EditorCommands() {
   let textAreaRef = useRef(null)
   let canvas = useSelector(state => state.canvas)
@@ -45,6 +46,7 @@ export function EditorCommands() {
         <Button onClick={onDumpPaper}>paper.js dump</Button>
         <textarea className="save_area" ref={textAreaRef}></textarea>
         <CursorTest/>
+        <TreeTest/>
 
       </Fragment>
   )

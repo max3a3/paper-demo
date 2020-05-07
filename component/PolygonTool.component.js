@@ -20,11 +20,12 @@ class PolygonToolComponent extends PathTool {
     },
   };
 
-  componentDidUpdate() {
+  componentDidUpdate() { // i think this is for updating color as you go ? so you need to push up the pathdata as you go via onSegmentAdd?
     const { path, points, props } = this;
     const { pathProps, pathData } = props;
     if (path) {
-      this.setPathData(pathData);
+      if (pathData) // this allow updating the colors, but leave a dangling polygon when user change tool
+        this.setPathData(pathData);
       Object.assign(path, pathProps);
     } else if (points) {
       this.pathInit();
