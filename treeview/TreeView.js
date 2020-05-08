@@ -1,3 +1,4 @@
+import React, { Component } from "react";
 import "./InsertTarget";
 import { TreeViewItemList } from "./Node";
 
