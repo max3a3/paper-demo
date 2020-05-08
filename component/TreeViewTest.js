@@ -6,8 +6,9 @@ import * as Immutable from "immutable";
 // const TouchDragDropBackend = require("react-dnd-touch-backend").default;
 
 
-const styles = require("./TreeViewTest.css");
-
+// can't get css modules to work with react create bundler
+// const styles = require("./TreeViewTest.css");
+import './TreeViewTest.css'
 
 
 
@@ -178,7 +179,7 @@ export class TreeViewTest extends Component {
   }
 
   renderNode = (node) => (
-      <div className={ styles.nodeItem }>
+      <div className="nodeItem">
         { !node.children || node.children.items.isEmpty()
             ? null
             : <a
@@ -195,10 +196,20 @@ export class TreeViewTest extends Component {
 
 
   render() {
+    // manual css modules, we can use the .less in brunch
+    let treeStyles = {
+      treeView:'treeView',
+      nodeList:'nodeList',
+      node:'node',
+      nodeItem:'nodeItem',
+      nodePositioningWrapper:'nodePositioningWrapper',
+      nodeDragging:'nodeDragging',
+      nodeChildren:'nodeChildren'
+    }
     return (
         <TreeView
             rootNodes={ this.state.rootNodes }
-            classNames={ styles }
+            classNames={treeStyles}
             renderNode={ this.renderNode }
             onMoveNode={ this.handleMoveNode }
         />
