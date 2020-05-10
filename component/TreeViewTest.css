@@ -12,7 +12,9 @@
 .node {
     border-bottom: 1px solid lightgray;
 }
-
+.node_dropping {
+    background:#eee
+}
 .nodeItem {
     padding: 0.3em;
 }
@@ -22,7 +24,7 @@
 }
 
 .nodeDragging {
-    color: #eeeeee;
+    color: #ddd;
 }
 
 .nodeChildren {

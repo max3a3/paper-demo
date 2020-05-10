@@ -3,14 +3,14 @@ import classnames from "classnames";
 import React from "react";
 import {
   DragSource,
-  useDrag,
+  useDrag, useDrop,
 
 
 } from "react-dnd";
 
 
 import {TYPE} from "./DraggedNode";
-import {DroppableTreeViewInsertTarget} from "./InsertTarget";
+import {DroppableTreeViewInsertTarget, handleDrop} from "./InsertTarget";
 
 
 const TreeViewItem =
@@ -93,17 +93,50 @@ function DraggableTreeViewItem(props) {
     }),
   })
 
+  const [{canDrop, isDropping}, drop] = useDrop({
+    accept: TYPE,
+    drop: (item, monitor) => monitor.didDrop()
+        ? undefined // we have nested drop target, this indicate some child already handled drop
+        : handleDrop(props, item, true),
 
+    canDrop: (item, monitor) => {
+      if (!props.node.children || props.node.children.items.isEmpty()) return //todo for type==layer or group
+      return (
+          !(
+              props.parentNode === item.parentNode &&
+              (
+                  props.parentChildIndex === item.parentChildIndex
+              )
+          ) &&
+          !item.allSourceIDs.contains(props.parentNode ? props.parentNode.id : null)
+      )
+    },
+
+
+    collect: (monitor) => ({
+      canDrop: monitor.canDrop(),
+      isDropping: monitor.isOver({shallow: true}) && monitor.canDrop(),
+    })
+
+
+  })
+
+  function attachRef(el) {
+    drag(el)
+    drop(el)
+  }
+
+  // https://github.com/react-dnd/react-dnd/issues/1483 Use same element as target and source with hooks
   return (
-      <div ref={drag}
+      <div ref={attachRef}
            className={
              classnames(props.classNames.node, {
-               [props.classNames.nodeDragging]: props.isDragging,
+               [props.classNames.nodeDragging]: isDragging,
              })}
            key={props.node.id}
       >
         <div>
-          {props.renderNode(props.node)}
+          {props.renderNode(props.node, isDropping)}
         </div>
         {
           props.node.isCollapsed

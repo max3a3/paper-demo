@@ -10,6 +10,7 @@ import * as Immutable from "immutable";
 // const styles = require("./TreeViewTest.css");
 import './TreeViewTest.css'
 
+import classNames from "classnames";
 
 
 
@@ -178,8 +179,8 @@ export class TreeViewTest extends Component {
     }));
   }
 
-  renderNode = (node) => (
-      <div className="nodeItem">
+  renderNode = (node,node_dropping) => (
+      <div className={classNames("nodeItem",{node_dropping})}>
         { !node.children || node.children.items.isEmpty()
             ? null
             : <a

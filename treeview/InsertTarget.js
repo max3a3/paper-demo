@@ -40,20 +40,19 @@ const handleCanDrop = (
     !item.allSourceIDs.contains(props.parentNode ? props.parentNode.id : null)
 );
 
-const handleDrop = (
+export const handleDrop = (
     props,
-    monitor,
-    component,
-    item
+    item,
+    onItem=false
 ) => (
     props.onMoveNode({
       oldParentNode: item.parentNode,
       oldParentChildIndex: item.parentChildIndex,
       oldPrecedingNode: item.precedingNode,
       node: item.node,
-      newParentNode: props.parentNode,
-      newParentChildIndex: props.parentChildIndex,
-      newPrecedingNode: props.precedingNode,
+      newParentNode: onItem?props.node:props.parentNode,
+      newParentChildIndex:onItem?0: props.parentChildIndex,
+      newPrecedingNode:onItem?null: props.precedingNode,
     }),
         ({
           parentNode: props.parentNode,
@@ -65,7 +64,7 @@ const handleDrop = (
 const nodeTarget = {
   drop: (props, monitor, component) => monitor.didDrop()
       ? undefined // we have nested drop target, this indicate some child already handled drop
-      : handleDrop(props, monitor, component, monitor.getItem()),
+      : handleDrop(props,  monitor.getItem()),
   canDrop: (props, monitor) => handleCanDrop(props, monitor, monitor.getItem()),
 };
 
@@ -85,7 +84,7 @@ export function DroppableTreeViewInsertTarget(props) {
     accept: TYPE,
     drop: (item, monitor) => monitor.didDrop()
         ? undefined // we have nested drop target, this indicate some child already handled drop
-        : handleDrop(props, monitor, null, item),
+        : handleDrop(props,  item),
     canDrop: (item, monitor) => (
         !(
             props.parentNode === item.parentNode &&

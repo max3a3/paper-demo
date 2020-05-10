@@ -59,7 +59,7 @@ let DebugStyles = {
   }
 }
 
-const isDebug = false;
+const isDebug = false;//true;
 
 export const Styles = {
 
