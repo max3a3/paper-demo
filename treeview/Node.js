@@ -53,14 +53,16 @@ const TreeViewItem =
                               classNames={ props.classNames }
                               renderNode={ props.renderNode }
                               onMoveNode={ props.onMoveNode }
-                          />
-                          : <DroppableTreeViewInsertTarget
-                              insertBefore={ false }
-                              parentNode={ props.node }
-                              parentChildIndex={ 0 }
-                              precedingNode={ null }
-                              onMoveNode={ props.onMoveNode }
-                          /> }
+                          /> : null
+                          // commented out adding a child to a leaf node
+                          // : <DroppableTreeViewInsertTarget
+                          //     insertBefore={ false }
+                          //     parentNode={ props.node }
+                          //     parentChildIndex={ 0 }
+                          //     precedingNode={ null }
+                          //     onMoveNode={ props.onMoveNode }
+                          // />
+                      }
                     </div>
               }
             </div>
